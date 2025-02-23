@@ -24,10 +24,13 @@ def fetch_article_content(link):
 
 # Function to generate a summary using an LLM
 def generate_summary(text, max_length=150):
+    print("Generating summary func...")
+    print('reached summarizer.get_summary')
+
     # Load a pre-trained summarization model
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
-    # Generate the summary
+    # # Generate the summary
     summary = summarizer(text, max_length=max_length, min_length=30, do_sample=False)
     return summary[0]['summary_text']
 

@@ -1,73 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automated News Scraper</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container my-5">
-        <h1 class="text-center mb-4">Automated News Scraper</h1>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Automated News Scraper</title>
+		<!-- Bootstrap 5 CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<!-- Custom CSS -->
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}" />
+	</head>
+	<body>
+		<div class="container my-5">
+			<h1 class="text-center mb-4">Automated News Scraper</h1>
 
-        <!-- Category Tabs -->
-        <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
-            {% for topic in broader_topics %}
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link {% if loop.first %}active{% endif %}" 
-                        id="{{ topic | replace(' ', '_') }}-tab" 
-                        data-bs-toggle="tab" 
-                        data-bs-target="#{{ topic | replace(' ', '_') }}" 
-                        type="button" role="tab" 
-                        aria-controls="{{ topic | replace(' ', '_') }}" 
-                        aria-selected="{% if loop.first %}true{% else %}false{% endif %}">
-                        {{ topic }}
-                    </button>
-                </li>
-            {% endfor %}
-        </ul>
+			<!-- Category Tabs -->
+			<ul class="nav nav-tabs" id="categoryTabs" role="tablist">
+				{% for topic in broader_topics %}
+				<li class="nav-item" role="presentation">
+					<button
+						class="nav-link {% if loop.first %}active{% endif %}"
+						id="{{ topic | replace(' ', '_') }}-tab"
+						data-bs-toggle="tab"
+						data-bs-target="#{{ topic | replace(' ', '_') }}"
+						type="button"
+						role="tab"
+						aria-controls="{{ topic | replace(' ', '_') }}"
+						aria-selected="{% if loop.first %}true{% else %}false{% endif %}">
+						{{ topic }}
+					</button>
+				</li>
+				{% endfor %}
+			</ul>
 
-        <!-- Tab Content -->
-        <div class="tab-content" id="categoryTabsContent">
-            {% for topic, subcategories in articles.items() %}
-                    <div class="tab-pane fade {% if loop.first %}show active{% endif %}" 
-                    id="{{ topic | replace(' ', '_') }}" 
-                    role="tabpanel" 
-                    aria-labelledby="{{ topic | replace(' ', '_') }}-tab">
-                    <div class="row mt-4">
-                        {% for subcategory, articles_list in subcategories.items() %}
-                            <div class="col-md-12 mb-4">
-                                <h3>{{ subcategory }}</h3>
-                                <div class="row">
-                                    {% for article in articles_list %}
-                                        <div class="col-md-6 col-lg-4 mb-4">
-                                            <div class="card h-100 shadow-sm">
-                                                {% if article.image %}
-                                                    <img src="{{ article.image }}" alt="{{ article.headline }}" class="card-img-top">
-                                                {% endif %}
-                                                <div class="card-body">
-                                                    <h3 class="card-title">{{ article.headline }}</h3>
-                                                    <p class="card-text">{{ article.summary }}</p>
-                                                    <a href="{{ article.link }}" target="_blank" class="btn btn-primary">Read more</a>
-                                                    <p class="text-muted mt-2 mb-0"><small>Source: {{ article.source }}</small></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
+			<!-- Tab Content -->
+			<div class="tab-content" id="categoryTabsContent">
+				{% for topic, subcategories in articles.items() %}
+				<div
+					class="tab-pane fade {% if loop.first %}show active{% endif %}"
+					id="{{ topic | replace(' ', '_') }}"
+					role="tabpanel"
+					aria-labelledby="{{ topic | replace(' ', '_') }}-tab">
+					<div>
+						<h2>{{ topic }}</h2>
+						Summarize this topic for me
+						<button class="btn btn-primary" onclick="summarize('{{ topic }}')">
+							Summarize
+						</button>
+					</div>
+					<div id="summary" class="card p-5 shadow-sm my-5 d-none">
+						Getting summary...
+					</div>
+					<div class="row mt-4">
+						{% for subcategory, articles_list in subcategories.items() %}
+						<div class="col-md-12 mb-4">
+							<h3>{{ subcategory }}</h3>
+							<div class="row">
+								{% for article in articles_list %}
+								<div class="col-md-6 col-lg-4 mb-4">
+									<div class="card h-100 shadow-sm">
+										{% if article.image %}
+										<img
+											src="{{ article.image }}"
+											alt="{{ article.headline }}"
+											class="card-img-top" />
+										{% endif %}
+										<div class="card-body">
+											<h3 class="card-title">{{ article.headline }}</h3>
+											<p class="card-text">{{ article.summary }}</p>
+											<a
+												href="{{ article.link }}"
+												target="_blank"
+												class="btn btn-primary"
+												>Read more</a
+											>
+											<p class="text-muted mt-2 mb-0">
+												<small>Source: {{ article.source }}</small>
+											</p>
+										</div>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
 
-    <!-- Bootstrap 5 JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-</body>
+		<!-- Bootstrap 5 JS and dependencies -->
+		<script>
+			function summarize(topic) {
+				console.log(`${topic} has beed clicked for summary`);
+				const summaryEl = document.getElementById("summary");
+
+				// add animation to the button & loading indicator
+				const button = document.querySelector(".btn-primary");
+				button.classList.add("disabled");
+				button.innerHTML = "Summarizing...";
+				summaryEl.classList.remove("d-none");
+				button.disabled = true;
+
+				fetch("/summarizer", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ topic: topic }),
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						// while updating text add type writer effect
+						let i = 0;
+						let txt = data.summary;
+						let speed = 5;
+						summaryEl.innerHTML = "";
+						function typeWriter() {
+							if (i < txt.length) {
+								summaryEl.innerHTML += txt.charAt(i);
+								i++;
+								setTimeout(typeWriter, speed);
+							}
+						}
+						typeWriter();
+						// remove animation after summary is added
+						button.classList.remove("disabled");
+						button.innerHTML = "Summarize";
+						button.disabled = false;
+
+						// summaryEl.innerHTML = data.summary;
+						console.log(data.summary);
+					});
+			}
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+	</body>
 </html>

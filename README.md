@@ -50,7 +50,6 @@ An automated news scraping web application built with **Flask**, **BeautifulSoup
 The scraper is configured to extract articles from the following news sources:
 - **India Today**
 - **BBC News**
-- **Reuters**
 
 Modify the `sites_config` list in `helpers/webscraper.py` to add or update news sources.
 

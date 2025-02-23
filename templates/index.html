@@ -13,50 +13,61 @@
     <div class="container my-5">
         <h1 class="text-center mb-4">Automated News Scraper</h1>
 
-        <!-- Search Bar -->
-        <div class="row mb-4">
-            <div class="col-md-6 mx-auto">
-                <input type="text" id="searchInput" class="form-control" placeholder="Search articles...">
-            </div>
-        </div>
+        <!-- Category Tabs -->
+        <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
+            {% for topic in broader_topics %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link {% if loop.first %}active{% endif %}" 
+                        id="{{ topic | replace(' ', '_') }}-tab" 
+                        data-bs-toggle="tab" 
+                        data-bs-target="#{{ topic | replace(' ', '_') }}" 
+                        type="button" role="tab" 
+                        aria-controls="{{ topic | replace(' ', '_') }}" 
+                        aria-selected="{% if loop.first %}true{% else %}false{% endif %}">
+                        {{ topic }}
+                    </button>
+                </li>
+            {% endfor %}
+        </ul>
 
-        <!-- Articles Grid -->
-        <div id="articlesGrid" class="row">
-            {% if articles %}
-                {% for article in articles %}
-                    <div class="col-md-6 col-lg-4 mb-4 article-card">
-                        <div class="card h-100 shadow-sm">
-                            {% if article.image %}
-                                <img src="{{ article.image }}" alt="{{ article.headline }}" class="card-img-top">
-                            {% endif %}
-                            <div class="card-body">
-                                <h3 class="card-title">{{ article.headline }}</h3>
-                                <p class="card-text">{{ article.summary }}</p>
-                                <a href="{{ article.link }}" target="_blank" class="btn btn-primary">Read more</a>
-                                <p class="text-muted mt-2 mb-0"><small>Source: {{ article.source }}</small></p>
-                                <p class="text-muted mb-0"><small>Broader Topic: {{ article.broader_topic }}</small></p>
-                                <p class="text-muted"><small>Sub-Topic: {{ article.sub_topic }}</small></p>
+        <!-- Tab Content -->
+        <div class="tab-content" id="categoryTabsContent">
+            {% for topic, subcategories in articles.items() %}
+                    <div class="tab-pane fade {% if loop.first %}show active{% endif %}" 
+                    id="{{ topic | replace(' ', '_') }}" 
+                    role="tabpanel" 
+                    aria-labelledby="{{ topic | replace(' ', '_') }}-tab">
+                    <div class="row mt-4">
+                        {% for subcategory, articles_list in subcategories.items() %}
+                            <div class="col-md-12 mb-4">
+                                <h3>{{ subcategory }}</h3>
+                                <div class="row">
+                                    {% for article in articles_list %}
+                                        <div class="col-md-6 col-lg-4 mb-4">
+                                            <div class="card h-100 shadow-sm">
+                                                {% if article.image %}
+                                                    <img src="{{ article.image }}" alt="{{ article.headline }}" class="card-img-top">
+                                                {% endif %}
+                                                <div class="card-body">
+                                                    <h3 class="card-title">{{ article.headline }}</h3>
+                                                    <p class="card-text">{{ article.summary }}</p>
+                                                    <a href="{{ article.link }}" target="_blank" class="btn btn-primary">Read more</a>
+                                                    <p class="text-muted mt-2 mb-0"><small>Source: {{ article.source }}</small></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
-            {% else %}
-                <p class="text-center">No articles found. Please wait for the scraper to fetch news.</p>
-            {% endif %}
-        </div>
-
-        <!-- Loading Spinner -->
-        <div id="loadingSpinner" class="text-center my-4 d-none">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 
     <!-- Bootstrap 5 JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </body>
 </html>

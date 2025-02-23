@@ -9,7 +9,7 @@ An automated news scraping web application built with **Flask**, **BeautifulSoup
 - **Flask Web Interface**: Displays the scraped news in a user-friendly manner.
 - **Threaded Scraping**: Runs the scraper in a background thread to continuously fetch news.
 
-## Technologies Used
+## Libraries Used
 
 - **Python**: Core language for scraping and backend development.
 - **Flask**: Web framework to serve scraped data.

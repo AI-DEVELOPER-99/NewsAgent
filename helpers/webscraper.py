@@ -19,10 +19,8 @@ def load_cached_articles():
         articles = {}
     return articles
 
-# In-memory storage for scraped articles
 articles = []
 
-# Define configurations for multiple news sites
 sites_config = [
     {
         'name': 'India Today',
@@ -33,24 +31,24 @@ sites_config = [
         'summary_tag': 'p',
         'num_pages': 2  # Number of pages to scrape for this site
     },
-    # {
-    #     'name': 'BBC News',
-    #     'base_url': 'https://www.bbc.com/news',
-    #     'article_tag': 'div',
-    #     'article_class': 'gs-c-promo',
-    #     'headline_tag': 'h3',
-    #     'summary_tag': 'p',
-    #     'num_pages': 2  # Number of pages to scrape for this site
-    # },
-    # {
-    #     'name': 'Reuters',
-    #     'base_url': 'https://www.reuters.com/news/archive',
-    #     'article_tag': 'article',
-    #     'article_class': 'story',
-    #     'headline_tag': 'h3',
-    #     'summary_tag': 'p',
-    #     'num_pages': 2  # Number of pages to scrape for this site
-    # }
+    {
+        'name': 'BBC News',
+        'base_url': 'https://www.bbc.com/news',
+        'article_tag': 'div',
+        'article_class': 'gs-c-promo',
+        'headline_tag': 'h3',
+        'summary_tag': 'p',
+        'num_pages': 2  # Number of pages to scrape for this site
+    },
+    {
+        'name': 'Reuters',
+        'base_url': 'https://www.reuters.com/news/archive',
+        'article_tag': 'article',
+        'article_class': 'story',
+        'headline_tag': 'h3',
+        'summary_tag': 'p',
+        'num_pages': 2  # Number of pages to scrape for this site
+    }
 ]
 
 # Define broader topics and subcategories

@@ -2,6 +2,10 @@
 let isLoading = false;
 let page = 1;
 
+setTimeout(function () {
+    window.location.reload();  // Reload the entire page
+}, 5000);  // 5000 milliseconds = 5 seconds
+
 window.addEventListener('scroll', () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     if (scrollTop + clientHeight >= scrollHeight - 10 && !isLoading) {

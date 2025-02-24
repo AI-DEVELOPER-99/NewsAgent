@@ -8,7 +8,7 @@ import json  # Add at the top
 def save_articles_to_cache():
     global articles
     with open('cached_articles.json', 'w') as f:
-        json.dump(articles, f)
+        json.dump(articles, f, default=str)
 
 def load_cached_articles():
     global articles

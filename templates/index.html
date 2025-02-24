@@ -35,8 +35,17 @@
 				</li>
 				{% endfor %}
 			</ul>
-
-			<!-- Tab Content -->
+			
+			{% if not articles %}
+			<!-- Loading Spinner -->
+			<div id="loadingSpinner" class="text-center my-4">
+				<div class="spinner-border text-primary" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+				<p>Fetching articles, please wait...</p>
+			</div>
+			{% endif %}
+			
 			<div class="tab-content" id="categoryTabsContent">
 				{% for topic, subcategories in articles.items() %}
 				<div

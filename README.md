@@ -21,8 +21,8 @@ An automated news scraping web application built with **Flask**, **BeautifulSoup
 
 1. **Clone the Repository**
    ```sh
-   git clone https://github.com/yourusername/automated-news-scraper.git
-   cd automated-news-scraper
+   git clone git@github.com:AI-DEVELOPER-99/NewsAgent.git
+   cd NewsAgent
    ```
 
 2. **Create and Activate Virtual Environment**

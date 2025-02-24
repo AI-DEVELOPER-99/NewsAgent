@@ -51,7 +51,9 @@
 							Summarize
 						</button>
 					</div>
-					<div id="summary" class="card p-5 shadow-sm my-5 d-none">
+					<div
+						id="{{ topic | replace(' ', '_') }} summary"
+						class="card p-5 shadow-sm my-5 d-none">
 						Getting summary...
 					</div>
 					<div class="row mt-4">
@@ -97,7 +99,9 @@
 		<script>
 			function summarize(topic) {
 				console.log(`${topic} has beed clicked for summary`);
-				const summaryEl = document.getElementById("summary");
+				const summaryEl = document.getElementById(
+					`${topic.replace(" ", "_")} summary`
+				);
 
 				// add animation to the button & loading indicator
 				const button = document.querySelector(".btn-primary");

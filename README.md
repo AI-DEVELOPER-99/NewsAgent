@@ -66,7 +66,3 @@ Modify the `sites_config` list in `helpers/webscraper.py` to add or update news 
 │-- requirements.txt     # Python dependencies
 │-- README.md            # Project documentation
 ```
-
-## License
-
-This project is licensed under the **MIT License**.
